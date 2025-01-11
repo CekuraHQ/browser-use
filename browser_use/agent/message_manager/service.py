@@ -56,6 +56,22 @@ class MessageManager:
 		self._add_message_with_tokens(system_message)
 		self.system_prompt = system_message
 		self.tool_call_in_content = tool_call_in_content
+		# FORK: Modify the tool call to make it more specific to product documentation
+		# tool_calls = [
+		# 	{
+		# 		'name': 'AgentOutput',
+		# 		'args': {
+		# 			'current_state': {
+		# 				'evaluation_previous_goal': 'Unknown - No previous actions to evaluate.',
+		# 				'memory': '',
+		# 				'next_goal': 'Obtain task from user',
+		# 			},
+		# 			'action': [],
+		# 		},
+		# 		'id': '',
+		# 		'type': 'tool_call',
+		# 	}
+		# ]
 		tool_calls = [
 			{
 				'name': 'AgentOutput',
@@ -63,7 +79,7 @@ class MessageManager:
 					'current_state': {
 						'evaluation_previous_goal': 'Unknown - No previous actions to evaluate.',
 						'memory': '',
-						'next_goal': 'Obtain task from user',
+						'next_goal': 'Obtain the product documentation from user',
 					},
 					'action': [],
 				},
@@ -85,7 +101,9 @@ class MessageManager:
 
 		self._add_message_with_tokens(example_tool_call)
 
-		task_message = HumanMessage(content=f'Your task is: {task}')
+		# FORK: Change the user message prefix because we are not providing a general task but a specific product documentation instead
+		# task_message = HumanMessage(content=f'Your task is: {task}')
+		task_message = HumanMessage(content=f'Here is the product documentation: {task}')
 		self._add_message_with_tokens(task_message)
 
 	def add_state_message(
