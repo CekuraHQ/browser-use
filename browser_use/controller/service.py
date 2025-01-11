@@ -34,19 +34,20 @@ class Controller:
 	def _register_default_actions(self):
 		"""Register all default browser actions"""
 
+		# FORK: Commenting out the search google action as we don't need to search google
 		# Basic Navigation Actions
-		@self.registry.action(
-			'Search Google in the current tab',
-			param_model=SearchGoogleAction,
-			requires_browser=True,
-		)
-		async def search_google(params: SearchGoogleAction, browser: BrowserContext):
-			page = await browser.get_current_page()
-			await page.goto(f'https://www.google.com/search?q={params.query}&udm=14')
-			await page.wait_for_load_state()
-			msg = f'🔍  Searched for "{params.query}" in Google'
-			logger.info(msg)
-			return ActionResult(extracted_content=msg, include_in_memory=True)
+		# @self.registry.action(
+		# 	'Search Google in the current tab',
+		# 	param_model=SearchGoogleAction,
+		# 	requires_browser=True,
+		# )
+		# async def search_google(params: SearchGoogleAction, browser: BrowserContext):
+		# 	page = await browser.get_current_page()
+		# 	await page.goto(f'https://www.google.com/search?q={params.query}&udm=14')
+		# 	await page.wait_for_load_state()
+		# 	msg = f'🔍  Searched for "{params.query}" in Google'
+		# 	logger.info(msg)
+		# 	return ActionResult(extracted_content=msg, include_in_memory=True)
 
 		@self.registry.action(
 			'Navigate to URL in the current tab', param_model=GoToUrlAction, requires_browser=True
@@ -150,22 +151,23 @@ class Controller:
 			logger.info(msg)
 			return ActionResult(extracted_content=msg, include_in_memory=True)
 
+		# FORK: Commenting out the extract page content action as we don't need to extract page content
 		# Content Actions
-		@self.registry.action(
-			'Extract page content to get the text or markdown ',
-			param_model=ExtractPageContentAction,
-			requires_browser=True,
-		)
-		async def extract_content(params: ExtractPageContentAction, browser: BrowserContext):
-			page = await browser.get_current_page()
+		# @self.registry.action(
+		# 	'Extract page content to get the text or markdown ',
+		# 	param_model=ExtractPageContentAction,
+		# 	requires_browser=True,
+		# )
+		# async def extract_content(params: ExtractPageContentAction, browser: BrowserContext):
+		# 	page = await browser.get_current_page()
 
-			content = MainContentExtractor.extract(  # type: ignore
-				html=await page.content(),
-				output_format=params.value,
-			)
-			msg = f'📄  Extracted page content\n: {content}\n'
-			logger.info(msg)
-			return ActionResult(extracted_content=msg)
+		# 	content = MainContentExtractor.extract(  # type: ignore
+		# 		html=await page.content(),
+		# 		output_format=params.value,
+		# 	)
+		# 	msg = f'📄  Extracted page content\n: {content}\n'
+		# 	logger.info(msg)
+		# 	return ActionResult(extracted_content=msg)
 
 		@self.registry.action('Complete task', param_model=DoneAction)
 		async def done(params: DoneAction):
