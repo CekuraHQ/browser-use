@@ -301,6 +301,8 @@ class Agent:
 		logger.info(f'{emoji} Eval: {response.current_state.evaluation_previous_goal}')
 		logger.info(f'🧠 Memory: {response.current_state.memory}')
 		logger.info(f'🎯 Next goal: {response.current_state.next_goal}')
+		# FORK: log the doc_context
+		logger.info(f'📖 Doc context: {response.current_state.doc_context}')
 		for i, action in enumerate(response.action):
 			logger.info(
 				f'🛠️  Action {i + 1}/{len(response.action)}: {action.model_dump_json(exclude_unset=True)}'

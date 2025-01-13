@@ -56,7 +56,10 @@ class MessageManager:
 		self._add_message_with_tokens(system_message)
 		self.system_prompt = system_message
 		self.tool_call_in_content = tool_call_in_content
-		# FORK: Modify the tool call to make it more specific to product documentation
+		# FORK: 
+		# 1. Modify the tool call to make it more specific to product documentation
+		# 2. Added a new field `doc_context` to keep track of which part of the document the agent is currently working on
+
 		# tool_calls = [
 		# 	{
 		# 		'name': 'AgentOutput',
@@ -80,6 +83,7 @@ class MessageManager:
 						'evaluation_previous_goal': 'Unknown - No previous actions to evaluate.',
 						'memory': '',
 						'next_goal': 'Obtain the product documentation from user',
+						'doc_context': '',
 					},
 					'action': [],
 				},

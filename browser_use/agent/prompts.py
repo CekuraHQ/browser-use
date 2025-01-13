@@ -19,13 +19,15 @@ class SystemPrompt:
 		"""
 		Returns the important rules for the agent.
 		"""
+		# FORK: Updating response format to include doc_context
 		text = """
 1. RESPONSE FORMAT: You must ALWAYS respond with valid JSON in this exact format:
    {
      "current_state": {
        "evaluation_previous_goal": "Success|Failed|Unknown - Analyze the current elements and the image to check if the previous goals/actions are successful like intended by the task. Ignore the action result. The website is the ground truth. Also mention if something unexpected happened like new suggestions in an input field. Shortly state why/why not",
        "memory": "Description of what has been done and what you need to remember until the end of the task",
-       "next_goal": "What needs to be done with the next actions"
+       "next_goal": "What needs to be done with the next actions",
+       "doc_context": "Description of which part of the document the agent is currently working on"
      },
      "action": [
        {

@@ -40,6 +40,8 @@ class AgentBrain(BaseModel):
 	evaluation_previous_goal: str
 	memory: str
 	next_goal: str
+	# FORK: add a new field to keep track of which part of the document the agent is currently working on
+	doc_context: str
 
 
 class AgentOutput(BaseModel):
