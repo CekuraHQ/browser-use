@@ -108,9 +108,15 @@ class MessageManager:
 		task_message = self.task_instructions(task)
 		self._add_message_with_tokens(task_message)
 
+	# FORK: Change the task instructions to be more specific to product documentation
+	# @staticmethod
+	# def task_instructions(task: str) -> HumanMessage:
+	# 	content = f'Your ultimate task is: {task}. If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.'
+	# 	return HumanMessage(content=content)
+	
 	@staticmethod
 	def task_instructions(task: str) -> HumanMessage:
-		content = f'Your ultimate task is: {task}. If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.'
+		content = f'Here is the product documentation:\n```{task}```\nYour task is to walk through the documentation and check if any part of the documentation is outdated.'
 		return HumanMessage(content=content)
 
 	def add_state_message(

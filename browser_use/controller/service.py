@@ -152,8 +152,6 @@ class Controller:
 			logger.info(msg)
 			return ActionResult(extracted_content=msg, include_in_memory=True)
 
-		# FORK: Commenting out the extract page content action as we don't need to extract page content
-		# Content Actions
 		@self.registry.action(
 			'Extract page content to get the pure text or markdown with links if include_links is set to true',
 			param_model=ExtractPageContentAction,
