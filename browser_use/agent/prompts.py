@@ -27,7 +27,7 @@ class SystemPrompt:
        "evaluation_previous_goal": "Success|Failed|Unknown - Analyze the current elements and the image to check if the previous goals/actions are successful like intended by the task. Ignore the action result. The website is the ground truth. Also mention if something unexpected happened like new suggestions in an input field. Shortly state why/why not",
        "memory": "Description of what has been done and what you need to remember until the end of the task",
        "next_goal": "What needs to be done with the next actions",
-       "doc_context": "Description of which part of the document the agent is currently working on"
+       "doc_context": "Direct copy of the relevant section of the original documentation you are referring to"
      },
      "action": [
        {
