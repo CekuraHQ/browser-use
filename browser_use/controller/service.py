@@ -95,7 +95,7 @@ class Controller:
 
 			try:
 				await browser._click_element_node(element_node)
-				msg = f'🖱️  Clicked index {params.index}, with text: {element_node.get_all_text_till_next_clickable_element()}'
+				msg = f'🖱️  Clicked button with index {params.index}: {element_node.get_all_text_till_next_clickable_element(max_depth=2)}'
 
 				logger.info(msg)
 				logger.debug(f'Element xpath: {element_node.xpath}')
@@ -154,21 +154,21 @@ class Controller:
 
 		# FORK: Commenting out the extract page content action as we don't need to extract page content
 		# Content Actions
-		# @self.registry.action(
-		# 	'Extract page content to get the text or markdown ',
-		# 	param_model=ExtractPageContentAction,
-		# 	requires_browser=True,
-		# )
-		# async def extract_content(params: ExtractPageContentAction, browser: BrowserContext):
-		# 	page = await browser.get_current_page()
-
-		# 	content = MainContentExtractor.extract(  # type: ignore
-		# 		html=await page.content(),
-		# 		output_format=params.value,
-		# 	)
-		# 	msg = f'📄  Extracted page content\n: {content}\n'
-		# 	logger.info(msg)
-		# 	return ActionResult(extracted_content=msg)
+		@self.registry.action(
+			'Extract page content to get the pure text or markdown with links if include_links is set to true',
+			param_model=ExtractPageContentAction,
+			requires_browser=True,
+		)
+		async def extract_content(params: ExtractPageContentAction, browser: BrowserContext):
+			page = await browser.get_current_page()
+			output_format = 'markdown' if params.include_links else 'text'
+			content = MainContentExtractor.extract(  # type: ignore
+				html=await page.content(),
+				output_format=output_format,
+			)
+			msg = f'📄  Extracted page as {output_format}\n: {content}\n'
+			logger.info(msg)
+			return ActionResult(extracted_content=msg)
 
 		@self.registry.action('Complete task', param_model=DoneAction)
 		async def done(params: DoneAction):
